@@ -605,7 +605,6 @@ class Controls extends Component {
                 MultiValueLabel: SortableMultiValueLabel,
               }}
             />
-            />
           </div>
         </div>
       );

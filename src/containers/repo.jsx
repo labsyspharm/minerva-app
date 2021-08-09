@@ -1586,14 +1586,15 @@ class Repo extends Component {
     this.setState(newState);
   }
 
-  createMaskOutput({masks}) {
+  createMaskOutput({masks, maskOpacity}) {
     return Array.from(masks.values()).map(v => {
       const channels = [{
           'state_label': v.map_state || 'State',
           'original_label': v.cache_name || '',
           'color': rgbToHex(v.color),
           'label': v.name,
-          'ids': v.map_ids
+          'ids': v.map_ids,
+          'opacity': maskOpacity
       }];
       let group_out = {
         'label': v.name,
@@ -1614,7 +1615,7 @@ class Repo extends Component {
           'min': chan.range.min / chan.maxRange,
           'max': chan.range.max / chan.maxRange,
           'label': chanLabel.get(id).label,
-          'id': id,
+          'id': id
         }
       });
       let render = channels;
@@ -1722,10 +1723,10 @@ class Repo extends Component {
 
   apiRender(render_url) {
     const{groups, masks} = this.state;
-    const {rgba, imageFile} = this.state;
+    const {rgba, imageFile, maskOpacity} = this.state;
     const {root_dir, out_name} = this.state;
     const {stories, chanLabel} = this.state;
-    const mask_output = this.createMaskOutput({masks});
+    const mask_output = this.createMaskOutput({masks, maskOpacity});
     const group_output = this.createGroupOutput({groups, chanLabel, rgba});
     const story_output = this.createWaypoints({stories, groups, masks});
     return fetch('http://'+render_url, {
@@ -1827,7 +1828,7 @@ class Repo extends Component {
 
   async save(is_autosave=false, save_as=false) {
 
-    let {groups, masks, saving, rgba} = this.state;
+    let {groups, masks, saving, rgba, maskOpacity} = this.state;
     const {stories, chanLabel} = this.state;
     const {img, session} = this.state;
     if (saving) {
@@ -1841,7 +1842,7 @@ class Repo extends Component {
 
     let minerva = this.props.env === 'cloud';
 
-    const mask_output = this.createMaskOutput({masks});
+    const mask_output = this.createMaskOutput({masks, maskOpacity});
     const group_output = this.createGroupOutput({groups, chanLabel, rgba});
     const story_output = this.createWaypoints({stories, groups, masks});
     const story_definition = this.createStoryDefinition(story_output, group_output);
@@ -2363,7 +2364,7 @@ class Repo extends Component {
   }
 
   preview() {
-    let {groups, chanLabel, stories, masks, rgba} = this.state;
+    let {groups, chanLabel, stories, masks, rgba, maskOpacity} = this.state;
     const group_output = this.createGroupOutput({groups, chanLabel, rgba});
     const story_output = this.createWaypoints({stories, groups, masks});
     const story_definition = this.createStoryDefinition(story_output, group_output);
@@ -2566,6 +2567,7 @@ class Repo extends Component {
         handleViewport={ this.handleViewport }
         interactor={ this.interactor }
         rotation={this.state.rotation}
+        maskOpacity={this.state.maskOpacity}
       />
     }
 
