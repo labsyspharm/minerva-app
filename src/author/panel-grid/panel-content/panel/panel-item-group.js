@@ -30,7 +30,6 @@ class PanelItemGroup extends sourceItemMap(
 
   get itemIdentifiers() {
     return {
-      UUID: this.elementState.UUID,
       GroupUUID: this.elementState.UUID
     }
   }

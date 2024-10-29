@@ -2,21 +2,21 @@
   align-items: start;
   cursor: pointer;
   button {
-    background-color: var(--dark-accept-color);
-    transform: scaleX(-1) rotate(90deg);
+    background-color: var(--icon-button-color, var(--dark-main-color));
+    transform: var(--icon-button-transform, none);
     border: var(--thin-glass-border);
     padding: var(--gap-tiny);
     border-radius: 50%;
+    transition: 0.05s;
     height: unset;
   }
 }
-:host([expanded='true']) {
+:host(*[close=true]) {
   button {
-    background-color: var(--dark-main-glass);
-    transform: scaleX(1) rotate(90deg);
+    background-color: var(--dark-reject-color);
   }
 }
-:host([close='true']) {
+:host(*[delete=true]) {
   button {
     background-color: var(--dark-reject-color);
   }

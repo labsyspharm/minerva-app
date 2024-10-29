@@ -1,5 +1,4 @@
 .full {
-  margin-right: var(--gap-small);
   grid-column: 1 / -1; 
   grid-row: 1 / -1;
 }

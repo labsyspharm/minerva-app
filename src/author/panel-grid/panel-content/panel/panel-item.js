@@ -12,6 +12,12 @@ class PanelItem extends useItemIdentifier(HTMLElement) {
     return panelItemCSS;
   }
 
+  connectedCallback() {
+    this.elementState.name = (
+      this.itemSource?.Properties.Name
+    );
+  }
+
   get elementTemplate() {
     const { collapseElement } = this.constructor; 
     const collapse = this.defineElement(collapseElement, {
@@ -38,7 +44,8 @@ class PanelItem extends useItemIdentifier(HTMLElement) {
           if (dialog) {
             this.elementState.dialog = dialog;
             this.elementState.selections = [{
-              origin: PanelItem.name, UUID
+              origin: PanelItem.name, UUID,
+              originElementState: this.elementState
             }]
           }
         },
@@ -80,8 +87,15 @@ class PanelItem extends useItemIdentifier(HTMLElement) {
   }
 
   get itemHeading() {
-    const item = this.itemSource;
-    return item?.Properties.Name
+    const heading = () => {
+      this.elementState.dialog;
+      const item = this.itemSource;
+      return item?.Properties.Name;
+    }
+    const name = () => {
+      return this.elementState.name;
+    }
+    return toElement('div')`${name}`({});
   }
 }
 

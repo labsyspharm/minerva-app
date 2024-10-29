@@ -10,6 +10,11 @@ class Collapse extends useItemIdentifier(A11yCollapse) {
     return collapseCSS;
   }
 
+  constructor () {
+    super();
+    this.icon = "icons:radio-button-checked";
+  }
+
   get expanded () {
     const item = this.itemSource;
     return (
@@ -21,6 +26,10 @@ class Collapse extends useItemIdentifier(A11yCollapse) {
     const item = this.itemSource;
     this.elementState.expanded = v;
     if (item) {
+      const prefix = "icons:radio-button-";
+      this.icon = prefix + [
+        "unchecked", "checked"
+      ][+v];
       item.State.Expanded = v;
       this.requestUpdate();
     }

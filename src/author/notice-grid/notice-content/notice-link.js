@@ -5,7 +5,7 @@ import { TextFieldLink } from './text-field/text-field-link';
 import { toElement } from '../../../lib/elements'
 
 class NoticeLink extends Notice {
-  static name = 'notice-content-link'
+  static name = 'notice-link'
 
   static get _styleSheet() {
     return noticeLinkCSS;

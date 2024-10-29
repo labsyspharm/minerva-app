@@ -4,17 +4,17 @@ import { Dialog } from './dialog/dialog';
 
 class DialogContent extends HTMLElement {
   static name = 'dialog-content'
+  static dialogElement = Dialog
 
   static get _styleSheet() {
     return dialogContentCSS;
   }
 
   get elementTemplate() {
-    const default_dialog = this.defineElement(Dialog);
     const content = () => {
-      const { dialog } = this.elementState;
-      const el = {
-      }[dialog] || default_dialog;
+      const el = this.defineElement(
+        this.constructor.dialogElement
+      );
       return toElement(el)``({});
     }
     return toElement('div')`

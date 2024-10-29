@@ -9,15 +9,11 @@ class TextFieldStory extends useItemSelection(
   static name = 'text-field-story'
 
   get value() {
-    const { itemSource: waypoint } = this;
-    const { property } = this.elementState;
-    return waypoint?.Properties[property] || '';
+    return this.getSelectionProperty(this.elementState.property);
   }
 
   set value(v) {
-    const { itemSource: waypoint } = this;
-    const { property } = this.elementState;
-    waypoint.Properties[property] = v;
+    this.setSelectionProperty(this.elementState.property, v);
   }
 }
 

@@ -1,4 +1,6 @@
 import panelGridCSS from './panel-grid.css' assert { type: 'css' };
+import { PanelContentGroup } from './panel-content/panel-content-group';
+import { PanelContentStory } from './panel-content/panel-content-story';
 import { PanelContent } from './panel-content/panel-content';
 import { DialogGrid } from './dialog-grid/dialog-grid';
 import { IconButton } from './icon-button';
@@ -44,11 +46,26 @@ class PanelGrid extends HTMLElement {
 
   get elementTemplate() {
     const nav = this.defineElement(Nav);
-    const panel = this.defineElement(PanelContent);
+    const choose_content = (tab) => {
+      return {
+        'STORY-PANEL': PanelContentStory,
+        'GROUP-PANEL': PanelContentGroup
+      }[tab] || PanelContent; 
+    }
+    const panel_content = () => {
+      const panel = this.defineElement(
+        choose_content(this.elementState.tab), {
+          defaults: { items: [] }
+        }
+      );
+      return toElement(panel)``({
+        class: 'stretch panel grid inner'
+      })
+    }
     const dialog = this.defineElement(DialogGrid);
     return toElement('div')`
       <${nav} class="contents"></${nav}>
-      <${panel} class="stretch panel grid inner"></${panel}>
+      ${panel_content}
       <${dialog} class="dialog" open="${
         () => this.elementState.dialog != ''
       }"></${dialog}>

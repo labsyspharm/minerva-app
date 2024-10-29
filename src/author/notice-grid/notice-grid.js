@@ -1,22 +1,26 @@
 import { toElement } from '../../lib/elements';
 import { StyledNotice } from './styled-notice/styled-notice';
 import { NoticeContent } from './notice-content/notice-content';
+import { NoticeContentLink } from './notice-content/notice-content-link';
 
 class NoticeGrid extends HTMLElement {
   static name = 'notice-grid'
 
-  static allNoticeTimer = new Set();
+  static allNoticeTimer = null;
 
   get elementTemplate() {
-    const notice_element = this.defineElement(NoticeContent);
-    const notice_title = () => {
-      const { nav_config, notice } = this.elementState;
-      const config = nav_config[notice] || {};
-      return config.title;
+    const choose_content = (notice) => {
+      return {
+        'LINK-NOTICE': NoticeContentLink
+      }[notice] || NoticeContent; 
     }
-    return toElement(this.defineElement(StyledNotice))`
-      <${notice_element}></${notice_element}>
-    `({
+    const notice_content = () => {
+      const notice_element = this.defineElement(
+        choose_content(this.elementState.notice)
+      );
+      return toElement(notice_element)``();
+    }
+    return toElement(this.defineElement(StyledNotice))`${notice_content}`({
       open: () => {
         return this.elementState.notice != '';
       },

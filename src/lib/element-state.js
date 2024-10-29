@@ -212,4 +212,10 @@ const toElementState = ( customSuffix, globals={} ) => {
   });
 }
 
-export { toElementState }
+const updateElementState = (elementState, key, value) => {
+  if (elementState && key) {
+    elementState[key] = value;
+  }
+}
+
+export { toElementState, updateElementState }

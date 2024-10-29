@@ -5,4 +5,7 @@ div.grid {
     margin-top: var(--gap-small);
     margin-bottom: 0;
   }
+  > icon {
+    background-color: var(--dark-reject-color);
+  }
 }

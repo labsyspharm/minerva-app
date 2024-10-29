@@ -95,20 +95,6 @@ const configure = (id) => {
         actions: [{
         }]
       }
-    case 'GROUP-DIALOG':
-      return {
-        role: 'dialog',
-        id, label: 'Edit Channel Group',
-        title: 'Editing Channel Group',
-        fields: [{
-          property: 'Title',
-          placeholder: 'Untitled Group', label: 'Title'
-        }],
-        actions: [{
-          label: 'Accept Edits',
-          className: 'accept'
-        }]
-      }
     case 'IMAGE-PANEL':
       return { 
         role: 'tab',

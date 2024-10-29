@@ -9,7 +9,6 @@ class CollapseChannel extends sourceGroupChannels(
 
   get itemIdentifiers() {
     return {
-      UUID: this.elementState.UUID,
       GroupUUID: this.elementState.GroupUUID
     }
   }

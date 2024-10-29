@@ -36,7 +36,6 @@ const author = (options={}) => {
       },
       tab_dialogs: {
         'STORY-PANEL': 'STORY-DIALOG',
-        'GROUP-PANEL': 'GROUP-DIALOG',
       }
     },
     styleSheet: globalCSS

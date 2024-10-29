@@ -15,7 +15,7 @@
       align-self: stretch;
       border-top: none;
     }
-    .dialog[open='true'] {
+    .dialog[open=true] {
       grid-row: 2 / 4;
       height: 100%;
     }
@@ -24,14 +24,18 @@
       align-self: start;
       justify-self: end;
       transform: translate(3em, .3em);
+      --icon-button-color: var(--dark-accept-color);
+      --icon-button-transform: scaleX(-1) rotate(90deg);
     }
-    > .icon[expanded='true'] {
+    > .icon[expanded=true] {
       transform: translate(0, .3em);
+      --icon-button-color: var(--dark-main-glass);
+      --icon-button-transform: scaleX(1) rotate(90deg);
     }
   }
 }
 
-:host([expanded='true']) {
+:host([expanded=true]) {
   .wrapper {
     overflow: hidden;
     .inner.grid {
@@ -40,7 +44,7 @@
   }
 }
 
-:host(:not([expanded='true'])) {
+:host(:not([expanded=true])) {
   transform: translate(-27em, 0);
   .wrapper {
     transform: translate(-3em, 0);
