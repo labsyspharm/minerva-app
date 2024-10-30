@@ -4,7 +4,6 @@
 }
 .full.text {
   padding-left: var(--gap-small);
-  padding-bottom: var(--gap-medium);
 }
 .full.actions > button {
   padding: 0px;
@@ -12,20 +11,12 @@
   height: 100%;
   width: 100%;
 }
-.end {
-  border-bottom: var(--thin-glass-border);
-  border-radius: var(--radius-panel-0011);
-}
-.end[expanded] {
-  border-radius: 0;
-}
 [slot=heading].one-line {
   align-items: center;
 }
 [slot=heading] {
   grid-template-columns: auto 1fr;
-  padding-left: var(--gap-small);
-  padding-top: var(--gap-tiny);
+  padding-bottom: var(--gap-medium);
   align-items: start;
   .grid {
     gap: var(--gap-small);
@@ -38,6 +29,4 @@
   padding: var(--gap-tiny);
   padding-left: var(--gap-small);
   padding-right: var(--gap-small);
-  border-radius: var(--radius-button-1111);
-  border: var(--thin-glass-border);
 }

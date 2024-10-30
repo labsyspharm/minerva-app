@@ -12,27 +12,27 @@ class Collapse extends useItemIdentifier(A11yCollapse) {
 
   constructor () {
     super();
-    this.icon = "icons:radio-button-checked";
+    this.expanded = this.expanded;
   }
 
   get expanded () {
     const item = this.itemSource;
-    return (
-      item?.State?.Expanded || false
-    );
+    if (item) {
+      return this.getItemState("Expanded");
+    }
+    return false;
   }
 
   set expanded (v) {
     const item = this.itemSource;
-    this.elementState.expanded = v;
     if (item) {
-      const prefix = "icons:radio-button-";
-      this.icon = prefix + [
-        "unchecked", "checked"
-      ][+v];
-      item.State.Expanded = v;
+      this.setItemState("Expanded", v);
       this.requestUpdate();
     }
+    const prefix = "icons:radio-button-";
+    this.icon = prefix + [
+      "unchecked", "checked"
+    ][+v];
     return true;
   }
 }

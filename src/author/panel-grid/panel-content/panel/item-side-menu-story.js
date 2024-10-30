@@ -1,4 +1,5 @@
 import { sourceStoryItems } from '../../../../items/source-story-items';
+import { PanelItemStory } from './panel-item-story';
 import { ItemSideMenu } from './item-side-menu';
 
 class ItemSideMenuStory extends (
@@ -6,6 +7,7 @@ class ItemSideMenuStory extends (
 ) {
 
   static name = 'item-side-menu-story'
+  static itemElement = PanelItemStory
 
 }
 

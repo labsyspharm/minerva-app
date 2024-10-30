@@ -82,7 +82,15 @@ function defineElement(element, options={}) {
     globalStyleSheet, customSuffix, closure
   } = this;
   return (el => {
-    const tag = `${element.name.toLowerCase()}-${customSuffix}`;
+    let n = 0;
+    let tag = `${element.name.toLowerCase()}-${customSuffix}`;
+    while (customElements.get(tag) !== undefined) {
+      n+=1;
+      tag = [
+        element.name.toLowerCase(),
+        n.toString(32), customSuffix
+      ].join('-');
+    }
     if (el.define) {
        // For UI5 Elements
       function get(...args) {

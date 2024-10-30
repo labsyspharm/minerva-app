@@ -1,3 +1,4 @@
+import { PanelItem } from './panel-item';
 import { toElement } from '../../../../lib/elements';
 import { IconButton } from '../../icon-button';
 import { useItemIdentifier } from '../../../../filters/use-item-identifier';
@@ -6,6 +7,7 @@ import itemSideMenuCSS from './item-side-menu.css' assert { type: 'css' };
 class ItemSideMenu extends useItemIdentifier(HTMLElement) {
 
   static name = 'item-side-menu'
+  static itemElement = PanelItem 
 
   static get _styleSheet() {
     return itemSideMenuCSS;
@@ -70,8 +72,20 @@ class ItemSideMenu extends useItemIdentifier(HTMLElement) {
     const action_menu = toElement('div')`${icons}`({
       draggable: "true"
     });
+    const item_element = this.constructor.itemElement; 
+    const panel_item = this.defineElement(item_element, {
+      defaults: {
+        expanded: false, UUID: this.elementState.UUID, name: ''
+      }
+    });
+    const item = this.itemSource;
+    const item_el = () => {
+      return toElement(panel_item)``({
+        class: 'contents'
+      });
+    }
     return toElement('div')`
-      ${action_menu}<div><slot name="item"></slot></div>
+      ${action_menu}<div>${item_el}</div>
     `({});
   }
 

@@ -9,37 +9,94 @@
   font-family: inherit;
   border: none;
   margin: 0;
-  simple-icon-lite#expand {
-    padding: var(--gap-tiny);
-    margin: var(--gap-tiny);
-  }
+  height: 100%;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: auto 1fr; 
+  grid-template-rows: auto 1fr;
+  justify-items: stretch;
+  padding-bottom: var(--gap-medium);
   > button {
-    border-radius: var(--radius-tab-1100);
-    font-size: var(--header-font-size);
-    border: var(--thin-glass-border);
-    border-bottom: none;
-    font-family: inherit;
-    cursor: pointer;
-    color: inherit;
+    display: contents;
+    > div#heading {
+      display: contents;
+      > div#text, > #expand {
+        margin: 0;
+        height: 100%;
+        display: grid;
+        align-items: start;
+      }
+      > div#text {
+        grid-column: 1 / -1;
+        justify-items: start;
+        grid-row: 1;
+      }
+      > #expand {
+        display: grid;
+        justify-items: center;
+        grid-template-columns: auto 1fr;
+      }
+      > #expand.rotated {
+        transform: none;
+      }
+    }
   }
-  div#content {
-    border-top: none;
-    transition: transform 0s ease 0s;
-    border: var(--thin-glass-border);
-    border-image: var(--glass-gradient) 1 100%;
-  }
-  div#heading {
-    align-items: stretch;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: 1fr;
+  > simple-tooltip {
     display: grid;
-    height: 100%;
-    div#text {
+    position: static;
+    align-items: start;
+    justify-items: end;
+    --simple-tooltip-margin: 0;
+    --simple-tooltip-width: auto;
+    --simple-tooltip-padding: var(--gap-tiny);
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  > div#content {
+    border-top: none;
+    grid-column: 2;
+    grid-row: 2;
+    transition: transform 0s ease 0s;
+    > div#content-inner {
+      height: 100%;
     }
   }
 }
+:host(:not([expanded])) {
+  > button {
+    > div#heading {
+      > #expand {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        width: unset;
+      }
+    }
+  }
+}
+:host([expanded]) {
+  > button {
+    > div#heading {
+      > #expand {
+        position: relative;
+        grid-column: 1;
+        grid-row: 2;
+      }
+      > #expand:before {
+        width: 0px;
+        content: ' ';
+        top: 24px;
+        position: absolute;
+        border: 1px solid white;
+        height: calc(100% - 24px);
+        border-image: var(--glass-gradient) 1 100%;
+      }
+    }
+  }
+
+}
 
 slot[name=content]::slotted(div) {
+  height: 100%;
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr;

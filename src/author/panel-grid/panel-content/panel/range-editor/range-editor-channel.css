@@ -82,8 +82,9 @@
   left: 0px;
 }
 ::part(root-container) {
+  --half-handle: calc(var(--handle-width) / 2);
+  padding: 0 var(--half-handle) 0 var(--half-handle);
   height: 100%;
-  width: 100%;
 }
 ::part(handle) {
   border-right: none; 

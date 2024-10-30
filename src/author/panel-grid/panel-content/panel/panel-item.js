@@ -12,17 +12,21 @@ class PanelItem extends useItemIdentifier(HTMLElement) {
     return panelItemCSS;
   }
 
-  connectedCallback() {
-    this.elementState.name = (
-      this.itemSource?.Properties.Name
-    );
+  static getPropertyOptions(k) {
+    if (k === 'expanded') {
+      return { reflect: true }
+    }
+    return {}
   }
+
+  static elementProperties = new Map([
+    ['expanded', { type: Boolean }],
+  ])
 
   get elementTemplate() {
     const { collapseElement } = this.constructor; 
     const collapse = this.defineElement(collapseElement, {
-      defaults: { UUID: '', expanded: true },
-      attributes: [ 'expanded' ]
+      defaults: { UUID: '' }
     });
     const item_contents = () => {
       return this.itemContents;
@@ -56,9 +60,12 @@ class PanelItem extends useItemIdentifier(HTMLElement) {
         class: 'full actions'
       });
     };
+    const expanded = this.getItemState("Expanded");
     return toElement(collapse)`
       <div class="grid" slot="heading">
-        ${() => this.itemHeading}
+        ${() => (
+          this.itemHeading
+        )}
       </div>
       <div slot="content">
         <div class="full text">
@@ -67,33 +74,19 @@ class PanelItem extends useItemIdentifier(HTMLElement) {
           ${content_action}
       </div>
     `({
-      expanded: String(
-        this.itemSource.State.Expanded
-      ),
       accordion: 'true',
+      expanded: () => expanded,
       UUID: (
         this.elementState.UUID
-      ),
-      class: () => {
-        const item = this.itemSource;
-        const items = this.itemSources;
-        const last_item = [...items].pop();
-        if (last_item.UUID == item.UUID) {
-          return 'end';
-        }
-        return ''
-      }
+      )
     });
   }
 
   get itemHeading() {
-    const heading = () => {
+    const name = () => {
       this.elementState.dialog;
       const item = this.itemSource;
       return item?.Properties.Name;
-    }
-    const name = () => {
-      return this.elementState.name;
     }
     return toElement('div')`${name}`({});
   }

@@ -1,6 +1,10 @@
 const sourceStoryItems = (element=Object) => (
   class extends element {
 
+    static mutableState = {
+      'Expanded': 'expanded'
+    }
+
     static mutableProperties = {
       'Name': 'name'
     }

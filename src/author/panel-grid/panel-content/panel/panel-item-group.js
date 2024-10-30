@@ -6,6 +6,7 @@ import { sourceItemMap } from '../../../../items/source-item-map'
 import { sourceGroupItems } from '../../../../items/source-group-items'
 import { sourceGroupChannels } from '../../../../items/source-group-channels'
 import { sourceSourceChannels } from '../../../../items/source-source-channels'
+import { useItemIdentifier } from '../../../../filters/use-item-identifier'
 import { CollapseGroup } from './collapse/collapse-group';
 import { CollapseChannel } from './collapse/collapse-channel';
 
@@ -15,7 +16,7 @@ const itemMap = {
 }
 
 class PanelItemGroup extends sourceItemMap(
-  itemMap, sourceGroupItems(PanelItem)
+  itemMap, useItemIdentifier(sourceGroupItems(PanelItem))
 ) {
 
   static name = 'panel-item-group'
@@ -89,10 +90,14 @@ class PanelItemGroup extends sourceItemMap(
     const channelTitles = () => {
       const groupChannels = this.itemMap.get('group-channels');
       return groupChannels.itemSources.map(channel => {
+        if (this.elementState.expanded) {
+          return '';
+        }
         const source = groupChannels.getSourceChannel(channel);
-        return toElement('div')`
-          ${source.Properties.Name}
-        `({
+        const name = () => {
+          return source.Properties.Name;
+        }
+        return toElement('div')`${name}`({
           class: 'flex item'
         });
       })
