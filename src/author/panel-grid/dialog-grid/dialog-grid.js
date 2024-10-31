@@ -10,19 +10,22 @@ class DialogGrid extends HTMLElement {
       const { nav_config, dialog } = this.elementState;
       return nav_config[dialog].title || dialog;
     }
+    const styled_dialog = this.defineElement(StyledDialog);
+    const default_choice = this.defineElement(
+      DialogContent, {
+        defaults: { items: [] }
+      }
+    )
     const choose_content = (dialog) => {
-      return {
-      }[dialog] || DialogContent;
+      return default_choice;
     }
     const content = () => {
-      const dialog_element = this.defineElement(
-        choose_content(this.elementState.dialog), {
-          defaults: { items: [] }
-        }
-      )
+      const dialog_element = choose_content(
+        this.elementState.dialog
+      );
       return toElement(dialog_element)``();
     }
-    return toElement(this.defineElement(StyledDialog))`
+    return toElement(styled_dialog)`
       <h3>${dialog_title}</h3>${content}
     `({
       open: () => {

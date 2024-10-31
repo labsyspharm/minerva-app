@@ -7,11 +7,11 @@ class CollapseChannel extends sourceGroupChannels(
   useItemIdentifier(Collapse)
 ) {
 
-  get itemIdentifiers() {
-    return {
-      GroupUUID: this.elementState.GroupUUID
-    }
-  }
+  static name = 'collapse-channel'
+
+  static itemStateMap = new Map([
+    ['Expanded', 'expanded']
+  ])
 
   static get _styleSheet() {
     [...Collapse._styleSheet.cssRules].forEach(
@@ -20,7 +20,11 @@ class CollapseChannel extends sourceGroupChannels(
     return collapseChannelCSS;
   }
 
-  static name = 'collapse-channel'
+  get itemIdentifiers() {
+    return {
+      GroupUUID: this.elementState.GroupUUID
+    }
+  }
 }
 
 export { CollapseChannel }

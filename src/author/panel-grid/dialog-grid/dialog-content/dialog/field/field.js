@@ -12,15 +12,37 @@ class Field extends HTMLElement {
   ])
 
   get elementTemplate() {
+    const default_text_choice = this.defineElement(
+      TextField, {
+        defaults: { property: '' }
+      }
+    );
+    const default_editor_choice = this.defineElement(
+      MDEditor, {
+        defaults: { property: '', linking: false },
+        attributes: [ 'linking' ]
+      }
+    )
+    const text_choices = {
+      'STORY-DIALOG': this.defineElement(
+        TextFieldStory, {
+          defaults: { property: '' }
+        }
+      )
+    }
+    const editor_choices = {
+      'STORY-DIALOG': this.defineElement(
+        MDEditorStory, {
+          defaults: { property: '', linking: false },
+          attributes: [ 'linking' ]
+        }
+      )
+    }
     const choose_editor = (dialog) => {
-      return {
-        'STORY-DIALOG': MDEditorStory
-      }[dialog] || MDEditor;
+      return editor_choices[dialog] || default_editor_choice;
     }
     const choose_text = (dialog) => {
-      return {
-        'STORY-DIALOG': TextFieldStory,
-      }[dialog] || TextField;
+      return text_choices[dialog] || default_text_choice;
     }
     const field = () => {
       const { 
@@ -28,12 +50,7 @@ class Field extends HTMLElement {
         dialog, notice
       } = this.elementState;
       if (markdown) {
-        const mdEditorElement = this.defineElement(
-          choose_editor(dialog), {
-            defaults: { property: '', linking: false },
-            attributes: [ 'linking' ]
-          }
-        )
+        const mdEditorElement = choose_editor(dialog);
         const editor = () => {
           return toElement(mdEditorElement)``({ 
             property, linking: () => (
@@ -48,11 +65,7 @@ class Field extends HTMLElement {
           class: 'contents'
         });
       }
-      const textFieldElement = this.defineElement(
-        choose_text(dialog), {
-          defaults: { property: '' }
-        }
-      )
+      const textFieldElement = choose_text(dialog); 
       return toElement(textFieldElement)``({
         label, property
       })

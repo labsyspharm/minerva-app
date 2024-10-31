@@ -8,6 +8,10 @@ class TextFieldStory extends useItemSelection(
 ) {
   static name = 'text-field-story'
 
+  static itemStateMap = new Map([
+    ['Name', 'name']
+  ])
+
   get value() {
     return this.getSelectionProperty(this.elementState.property);
   }

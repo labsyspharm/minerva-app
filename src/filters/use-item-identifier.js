@@ -22,15 +22,16 @@ const useItemIdentifier = (element=Object) => (
       }
     }
 
-    getItemState(state_key) {
+    getItemState(item_key) {
       const { State = {} } = this.itemSource;
-      return State[state_key];
+      return State[item_key];
     }
 
-    setItemState(state_key, value) {
+    setItemState(item_key, value) {
       const { State = {} } = this.itemSource;
-      State[state_key] = value;
-      const key = this.constructor.mutableState[state_key];
+      State[item_key] = value;
+      const bindings = this.constructor.itemStateMap;
+      const key = (bindings || new Map()).get(item_key);
       updateElementState(this.elementState, key, value);
     }
   }

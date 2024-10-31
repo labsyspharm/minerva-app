@@ -2,9 +2,6 @@
   grid-column: 1 / -1; 
   grid-row: 1 / -1;
 }
-.full.text {
-  padding-left: var(--gap-small);
-}
 .full.actions > button {
   padding: 0px;
   border: none;
@@ -16,17 +13,19 @@
 }
 [slot=heading] {
   grid-template-columns: auto 1fr;
-  padding-bottom: var(--gap-medium);
   align-items: start;
-  .grid {
+  height: 100%;
+  div.grid {
     gap: var(--gap-small);
-    .flex.wrap {
+    font-size: 1.1em;
+    > div:first-child {
+      font-size: 1.1em;
+    }
+    > div.flex.wrap {
       gap: var(--gap-tiny);
+      div:not(:last-child)::after {
+        content: ',';
+      }
     }
   }
-}
-.item {
-  padding: var(--gap-tiny);
-  padding-left: var(--gap-small);
-  padding-right: var(--gap-small);
 }

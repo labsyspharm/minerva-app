@@ -3,12 +3,17 @@ import { defaultConverter } from '@lit/reactive-element';
 
 const convertToAttribute = (properties, k, v) => {
   const v_type = (properties?.get(k))?.type || String;
+  if (v_type === Boolean) {
+    return [true, 'true', ''].includes(v) ? '' : null;
+  }
   return defaultConverter.toAttribute(v, v_type);
 }
 
 const convertFromAttribute = (properties, k, v_att) => {
-  if (v_att === 'false') v_att = null;
   const v_type = (properties?.get(k))?.type || String;
+  if (v_type === Boolean) {
+    return [true, 'true', ''].includes(v_att);
+  }
   return defaultConverter.fromAttribute(v_att, v_type);
 }
 
@@ -41,7 +46,7 @@ const createReactiveState = (options, closure=null) => {
 
 function updateAttribute(k, v_att) {
   this.reflectingProperty = k;
-  if (v_att == null) {
+  if (v_att === null) {
     return this.removeAttribute(k);
   }
   this.setAttribute(k, v_att)
@@ -181,6 +186,11 @@ function defineElement(element, options={}) {
       if (this.constructor?.getPropertyOptions) {
         return this.constructor?.getPropertyOptions(k);
       }
+      const properties = this.constructor.elementProperties;
+      const v_type = (properties?.get(k))?.type || String;
+      if (v_type !== String) {
+        return { reflext: true };
+      }
       return {};
     }
     attributeChangedCallback(k, old_v, v) {
@@ -193,7 +203,7 @@ function defineElement(element, options={}) {
       }
       else {
         this.elementState[k] = convertFromAttribute(
-          this.constructor.elementProperties, k, v
+          this.constructor.elementProperties, k, v 
         );
       }
     }

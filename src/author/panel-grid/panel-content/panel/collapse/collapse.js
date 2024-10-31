@@ -10,9 +10,14 @@ class Collapse extends useItemIdentifier(A11yCollapse) {
     return collapseCSS;
   }
 
-  constructor () {
-    super();
+  connectedCallback () {
+    super.connectedCallback();
     this.expanded = this.expanded;
+    this.addEventListener("a11y-collapse-attached", () => {
+      const icon = this.shadowRoot.querySelector("#expand"); 
+      icon.removeAttribute("aria-hidden");
+      icon.setAttribute("tabindex", "1");
+    })
   }
 
   get expanded () {
@@ -27,7 +32,6 @@ class Collapse extends useItemIdentifier(A11yCollapse) {
     const item = this.itemSource;
     if (item) {
       this.setItemState("Expanded", v);
-      this.requestUpdate();
     }
     const prefix = "icons:radio-button-";
     this.icon = prefix + [

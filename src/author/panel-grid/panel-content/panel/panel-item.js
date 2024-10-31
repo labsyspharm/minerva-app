@@ -12,21 +12,9 @@ class PanelItem extends useItemIdentifier(HTMLElement) {
     return panelItemCSS;
   }
 
-  static getPropertyOptions(k) {
-    if (k === 'expanded') {
-      return { reflect: true }
-    }
-    return {}
-  }
-
-  static elementProperties = new Map([
-    ['expanded', { type: Boolean }],
-  ])
-
   get elementTemplate() {
     const { collapseElement } = this.constructor; 
     const collapse = this.defineElement(collapseElement, {
-      defaults: { UUID: '' }
     });
     const item_contents = () => {
       return this.itemContents;
@@ -60,7 +48,6 @@ class PanelItem extends useItemIdentifier(HTMLElement) {
         class: 'full actions'
       });
     };
-    const expanded = this.getItemState("Expanded");
     return toElement(collapse)`
       <div class="grid" slot="heading">
         ${() => (
@@ -75,10 +62,7 @@ class PanelItem extends useItemIdentifier(HTMLElement) {
       </div>
     `({
       accordion: 'true',
-      expanded: () => expanded,
-      UUID: (
-        this.elementState.UUID
-      )
+      id: 'collapse'
     });
   }
 
@@ -88,7 +72,18 @@ class PanelItem extends useItemIdentifier(HTMLElement) {
       const item = this.itemSource;
       return item?.Properties.Name;
     }
-    return toElement('div')`${name}`({});
+    return toElement('div')`<div>${name}</div>`({
+      class: 'grid'
+    });
+  }
+
+  attributeChangedCallback(k, old_v, v) {
+    if (k !== "expanded") return;
+    const collapse = this.shadowRoot.getElementById("collapse");
+    collapse.expanded = Boolean(v);
+    if (collapse.expanded == false) {
+      this.elementState.open_menu = false;
+    }
   }
 }
 

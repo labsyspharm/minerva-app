@@ -9,18 +9,23 @@ class NoticeGrid extends HTMLElement {
   static allNoticeTimer = null;
 
   get elementTemplate() {
+    const default_choice = this.defineElement(
+      NoticeContent
+    )
+    const choices = {
+      'LINK-NOTICE': this.defineElement(
+        NoticeContentLink
+      )
+    }
     const choose_content = (notice) => {
-      return {
-        'LINK-NOTICE': NoticeContentLink
-      }[notice] || NoticeContent; 
+      return choices[notice] || default_choice; 
     }
+    const styled_notice = this.defineElement(StyledNotice);
     const notice_content = () => {
-      const notice_element = this.defineElement(
-        choose_content(this.elementState.notice)
-      );
-      return toElement(notice_element)``();
+      const content = choose_content(this.elementState.notice);
+      return toElement(content)``();
     }
-    return toElement(this.defineElement(StyledNotice))`${notice_content}`({
+    return toElement(styled_notice)`${notice_content}`({
       open: () => {
         return this.elementState.notice != '';
       },

@@ -5,6 +5,10 @@ class CollapseStory extends sourceStoryItems(Collapse) {
 
   static name = 'collapse-story'
 
+  static itemStateMap = new Map([
+    ['Expanded', 'expanded']
+  ])
+
 }
 
 export { CollapseStory }

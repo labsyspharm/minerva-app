@@ -11,18 +11,18 @@ class Notice extends HTMLElement {
 
   get elementTemplate() {
     const { nav_config, notice } = this.elementState;
+    const button = this.defineElement(IconButton);
     const config = nav_config[notice];
     return toElement('div')`
       <h2>${() => config.title}</h2>
-      ${this.iconTemplate} 
+      ${() => this.iconTemplate(button)} 
       <p>${() => config.success}</p>
     `({
        class: 'grid'
      });
   }
 
-  get iconTemplate() {
-    const button = this.defineElement(IconButton);
+  iconTemplate(button) {
     return toElement(button)``({
       icon: 'icons:close',
       class: 'icon', close: true,

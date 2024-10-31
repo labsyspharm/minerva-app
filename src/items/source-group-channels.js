@@ -3,10 +3,6 @@ import { sourceSourceChannels } from './source-source-channels';
 const sourceGroupChannels = (element=Object) => (
   class extends element {
 
-    static mutableState = {
-      'Expanded': 'expanded'
-    }
-
     get itemSources() {
       const group_channels = this.elementState.item_registry?.GroupChannels;
       return (group_channels || []).filter(({ Associations: x }) => {

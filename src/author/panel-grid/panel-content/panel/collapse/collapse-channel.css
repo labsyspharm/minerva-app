@@ -1,8 +1,12 @@
 :host {
 }
 
+::slotted([slot=heading]) {
+  padding-top: calc(var(--gap-tiny)/2);
+  font-size: 1.1em;
+}
 ::slotted(.grid[slot=content]) {
+  margin-top: var(--gap-small);
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  margin-left: var(--gap-small);
 }

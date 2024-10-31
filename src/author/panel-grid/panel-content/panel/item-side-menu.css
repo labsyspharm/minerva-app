@@ -1,26 +1,30 @@
 :host {
   > div {
     display: grid;
+    gap: 0 var(--gap-tiny);
     grid-template-rows: auto 1fr;
     grid-template-columns: auto 1fr;
     > div {
       grid-row: 1/-1;
     }
     > div:first-child {
+      --scale: 0.5;
       grid-row: 1;
       display: grid;
       align-items: start;
       align-self: start;
       position: sticky;
-      margin-right: var(--gap-tiny); 
-      margin-top: var(--gap-small);
       top: var(--gap-small);
       gap: var(--gap-tiny);
+      margin-top: calc(
+        var(--gap-medium) - var(--scale) * var(--gap-tiny)
+      );
+      > .icon {
+        --icon-button-scale: var(--scale);
+      }
+      > .open.icon:first-child {
+        --icon-button-transform: rotate(90deg);
+      }
     }
-  }
-}
-:host([expanded]) {
-  .icon:first-child {
-    --icon-button-transform: rotate(90deg);
   }
 }

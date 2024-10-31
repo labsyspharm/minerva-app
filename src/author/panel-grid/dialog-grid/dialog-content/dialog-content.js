@@ -11,10 +11,10 @@ class DialogContent extends HTMLElement {
   }
 
   get elementTemplate() {
+    const el = this.defineElement(
+      this.constructor.dialogElement
+    );
     const content = () => {
-      const el = this.defineElement(
-        this.constructor.dialogElement
-      );
       return toElement(el)``({});
     }
     return toElement('div')`

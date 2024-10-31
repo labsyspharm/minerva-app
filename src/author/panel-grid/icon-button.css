@@ -3,9 +3,9 @@
   cursor: pointer;
   button {
     background-color: var(--icon-button-color, var(--dark-main-color));
+    padding: calc(var(--icon-button-scale, 1) * var(--gap-tiny));
     transform: var(--icon-button-transform, none);
     border: var(--thin-glass-border);
-    padding: var(--gap-tiny);
     border-radius: 50%;
     transition: 0.05s;
     height: unset;

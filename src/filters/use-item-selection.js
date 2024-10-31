@@ -21,16 +21,17 @@ const useItemSelection = (origin, element=Object) => (
       }) || null;
     }
 
-    getSelectionProperty(property) {
+    getSelectionProperty(item_key) {
       const { Properties = {} } = this.itemSource;
-      return Properties[property];
+      return Properties[item_key];
     }
 
-    setSelectionProperty(property, value) {
+    setSelectionProperty(item_key, value) {
       const { originElementState } = this.selectionSource;
       const { Properties = {} } = this.itemSource;
-      Properties[property] = value;
-      const key = this.constructor.mutableProperties[property];
+      Properties[item_key] = value;
+      const bindings = this.constructor.itemStateMap;
+      const key = (bindings || new Map()).get(item_key);
       updateElementState(originElementState, key, value);
     }
   }

@@ -21,8 +21,11 @@ class Panel extends HTMLElement {
     const content = (item) => {
       const menu_element = this.constructor.menuElement; 
       const menu = this.defineElement(menu_element, {
-        defaults: { expanded: false, UUID: item.UUID },
-        attributes: [ "expanded" ]
+        defaults: {
+          expanded: item.State.Expanded,
+          open_menu: false,
+          UUID: item.UUID
+        }
       });
       return toElement(menu)``({
         UUID: item.UUID
