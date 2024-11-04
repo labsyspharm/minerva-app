@@ -20,25 +20,22 @@
     display: contents;
     > div#heading {
       display: contents;
-      > div#text, > #expand {
+      > #text, > #expand {
         margin: 0;
         display: grid;
         align-items: start;
-        height: calc(100% - var(--gap-medium));
-        padding-top: var(--gap-medium);
       }
-      > div#text {
+      > #text {
+        padding-bottom: var(--gap-medium);
         justify-items: start;
         grid-column: 2;
         grid-row: 1;
       }
       > #expand {
+        height: 100%;
         display: grid;
         justify-items: center;
         grid-template-columns: auto 1fr;
-      }
-      > #expand.rotated {
-        transform: none;
       }
     }
   }
@@ -69,6 +66,7 @@
       > #expand {
         grid-column: 1;
         grid-row: 1 / -1;
+        transform: none;
         width: unset;
       }
     }

@@ -14,11 +14,8 @@
       align-items: start;
       align-self: start;
       position: sticky;
-      top: var(--gap-small);
+      top: var(--gap-tiny);
       gap: var(--gap-tiny);
-      margin-top: calc(
-        var(--gap-medium) - var(--scale) * var(--gap-tiny)
-      );
       > .icon {
         --icon-button-scale: var(--scale);
       }
