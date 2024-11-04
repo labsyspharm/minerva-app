@@ -80,7 +80,9 @@ class PanelItemGroup extends sourceItemMap(
         class: 'inner'
       });
     });
-    return toElement('div')`${channels}`();
+    return toElement('div')`${channels}`({
+      class: "grid"
+    });
   }
 
   get itemHeading () {
