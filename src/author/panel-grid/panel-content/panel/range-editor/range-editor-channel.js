@@ -60,8 +60,8 @@ class RangeEditorChannel extends sourceGroupChannels(
         const start = e.target.startValue;
         const end = e.target.endValue;
         const { itemSource } = this;
-        itemSource.Properties.LowerRange = start;
-        itemSource.Properties.UpperRange = end;
+        itemSource.Properties.LowerRange = log2(start);
+        itemSource.Properties.UpperRange = log2(end);
       }
     });
     return toElement('div')`${
