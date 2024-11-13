@@ -1,5 +1,5 @@
 import { PanelItem } from './panel-item';
-import { toElement } from '../../../../lib/elements'
+import { toElement } from '../../../../lib/elements';
 import panelItemGroupCSS from './panel-item-group.css' assert { type: 'css' };
 import { RangeEditorChannel } from './range-editor/range-editor-channel'
 import { sourceItemMap } from '../../../../items/source-item-map'
@@ -9,6 +9,7 @@ import { sourceSourceChannels } from '../../../../items/source-source-channels'
 import { useItemIdentifier } from '../../../../filters/use-item-identifier'
 import { CollapseGroup } from './collapse/collapse-group';
 import { CollapseChannel } from './collapse/collapse-channel';
+import { Chart } from './chart/chart';
 
 const itemMap = {
   'group-channels': sourceGroupChannels(),
@@ -16,7 +17,7 @@ const itemMap = {
 }
 
 class PanelItemGroup extends sourceItemMap(
-  itemMap, useItemIdentifier(sourceGroupItems(PanelItem))
+  itemMap, sourceGroupItems(PanelItem)
 ) {
 
   static name = 'panel-item-group'
@@ -48,12 +49,18 @@ class PanelItemGroup extends sourceItemMap(
         attributes: [ 'expanded' ]
       }
     );
+    const chartElement = this.defineElement(Chart, {
+      defaults: { UUID: '' }
+    });
     const groupChannels = this.itemMap.get('group-channels');
     const channels = groupChannels.itemSources.map((channel, i) => {
       const source = groupChannels.getSourceChannel(channel);
       const item_title = () => source.Properties.Name;
-      const placeholder = () => {
-        return `full histogram placeholder i${i%6}`;
+      const chart = () => {
+        return toElement(chartElement)``({
+          class: () => `full histogram`,
+          UUID: () => source.UUID
+        });
       }
       const rangeEditor = () => {
         return toElement(rangeEditorElement)``({
@@ -69,7 +76,7 @@ class PanelItemGroup extends sourceItemMap(
           </div>
         </div>
         <div slot="content" class="center grid">
-          <div class="${placeholder}"></div>
+          ${chart} 
           ${rangeEditor}
         </div>
       `({

@@ -18,6 +18,10 @@ const to_source_channel = (image, data_type, index) => {
     Properties: {
       SourceIndex: index,
       Name: lorem.sentence(1),
+      Distribution: [...new Array(100)].reduce((d,v) => {
+        const delta = 5 - Math.ceil(Math.random()*10);
+        return [...d, Math.max(0, d.slice(-1)[0] + delta)];
+      }, [5])
     },
     Associations: {
       SourceDataType: {

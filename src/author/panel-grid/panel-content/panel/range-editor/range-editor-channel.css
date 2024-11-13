@@ -57,7 +57,7 @@
   height: 100%;
 }
 ::part(progress-bar) {
-  opacity: 50%;
+  opacity: 66%;
 }
 ::part(progress-bar)::before {
   width: 100%;
