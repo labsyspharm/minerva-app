@@ -12,8 +12,7 @@ import { CollapseChannel } from './collapse/collapse-channel';
 import { Chart } from './chart/chart';
 
 const itemMap = {
-  'group-channels': sourceGroupChannels(),
-  'source-channels': sourceSourceChannels()
+  'group-channels': sourceGroupChannels()
 }
 
 class PanelItemGroup extends sourceItemMap(

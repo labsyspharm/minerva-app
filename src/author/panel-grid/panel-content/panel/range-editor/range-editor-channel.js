@@ -21,11 +21,15 @@ class RangeEditorChannel extends sourceGroupChannels(
 
   get dataType() {
     const { item_registry } = this.elementState;
-    const { Associations } = this.itemSource || {};
+    const source_channel = this.getSourceChannel(
+      this.itemSource
+    );
+    const { Associations } = source_channel;
     const { SourceDataType } = Associations || {};
-    return item_registry.DataTypes[
-      SourceDataType?.ID
-    ] || {
+    const data_type = item_registry.DataTypes.find(data_type => {
+      return data_type.ID == SourceDataType?.ID
+    });
+    return data_type?.Properties || {
       LowerRange: 0, UpperRange: 65535
     };
   }
@@ -36,11 +40,21 @@ class RangeEditorChannel extends sourceGroupChannels(
     )
     const dataType = this.dataType;
     const defaultValues = this.itemSource.Properties;
+    const pow2 = (value) => {
+      return Math.max(
+        dataType.LowerRange, Math.min(
+          dataType.UpperRange, Math.floor(2**value)
+        )
+      );
+    }
+    const log2 = (value) => {
+      return Math.ceil(Math.log2(Math.max(1/2, value)));
+    }
     const rangeInput = toElement(rangeInputElement)``({
-      min: String(dataType.LowerRange),
-      max: String(dataType.UpperRange),
-      'start-value': String(defaultValues.LowerRange),
-      'end-value': String(defaultValues.UpperRange),
+      min: String(log2(dataType.LowerRange)),
+      max: String(log2(dataType.UpperRange)),
+      'start-value': String(log2(defaultValues.LowerRange)),
+      'end-value': String(log2(defaultValues.UpperRange)),
       class: 'full grid',
       '@input': (e) => {
         const start = e.target.startValue;
