@@ -63,7 +63,7 @@ class PanelItemGroup extends sourceItemMap(
       }
       const style = () => {
         const color = groupChannels.getSourceColor(channel);
-        const { R, G, B, Space } = color.Properties;
+        const { R, G, B, Space } = color?.Properties || {};
         const rgb = Space !== "sRGB" ? "" : (
           `rgb(${R},${G},${B})`
         );
