@@ -24,9 +24,8 @@ const sourceGroupChannels = (element=Object) => (
       const color = group_channel.Associations.Color;
       const source = new (sourceColors(Object));
       source.elementState = this.elementState;
-      console.log(source.itemSources);
       return source.itemSources.find(({ ID }) => {
-        return ID == color.ID;
+        return ID === color?.ID;
       }) || null;
     }
   }
