@@ -1,5 +1,5 @@
-import foobarIpsum from 'foobar-ipsum'
-import nanoid from '../lib/nanoid/nanoid'
+import foobarIpsum from 'foobar-ipsum';
+import nanoid from '../lib/nanoid/nanoid';
 
 const lorem = new foobarIpsum({
   size: {
@@ -34,7 +34,9 @@ const to_source_channel = (image, data_type, index) => {
   }
 }
 
-const to_group_channel = (group, channel, expanded) => {
+const to_group_channel = (
+  group, channel, color, expanded
+) => {
   return {
     UUID: nanoid(),
     State: {
@@ -49,6 +51,9 @@ const to_group_channel = (group, channel, expanded) => {
       },
       SourceChannel: {
         UUID: channel.UUID
+      },
+      Color: {
+        ID: color.ID
       }
     }
   }
@@ -87,6 +92,23 @@ const to_story = (expanded, length=1) => {
 const to_item_registry = () => {
   const image = to_image();
   const n_channels = 24;
+  const space = "sRGB";
+  const colors = [
+    [13, 171, 255], [195, 255, 0],
+    [255, 139, 0], [255, 0, 199],
+  ].map(([r, g, b]) => ({
+    ID: space + '#' + (
+      (1 << 24) + (r << 16) + (g << 8) + b
+    ).toString(16).slice(1),
+    Properties: {
+      R: r,
+      G: g,
+      B: b,
+      Space: space,
+      LowerRange: 0,
+      UpperRange: 255 
+    }
+  }))
   const data_type = {
     ID: 'uint16',
     Properties: {
@@ -110,7 +132,9 @@ const to_item_registry = () => {
       source_channels.length / groups.length
     );
     const group = groups[Math.floor(i/size)]
-    return to_group_channel(group, channel, true);
+    return to_group_channel(
+      group, channel, colors[i%colors.length], true
+    );
   });
   return {
     "Name": "Example Story",
@@ -125,6 +149,7 @@ const to_item_registry = () => {
     "Groups": groups,
     "Images": [ image ],
     "DataTypes": [ data_type ],
+    "Colors": colors,
     "Hyperlinks": []
   };
 }

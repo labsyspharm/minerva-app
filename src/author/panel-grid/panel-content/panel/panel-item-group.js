@@ -61,11 +61,20 @@ class PanelItemGroup extends sourceItemMap(
           UUID: () => source.UUID
         });
       }
+      const style = () => {
+        const color = groupChannels.getSourceColor(channel);
+        const { R, G, B, Space } = color.Properties;
+        const rgb = Space !== "sRGB" ? "" : (
+          `rgb(${R},${G},${B})`
+        );
+        console.log(color.ID);
+        return `--slider-background: ${rgb};`;
+      }
       const rangeEditor = () => {
         return toElement(rangeEditorElement)``({
           GroupUUID: () => this.itemIdentifiers.GroupUUID,
           UUID: () => channel.UUID,
-          class: "full"
+          style, class: "full"
         });
       }
       return toElement(collapseChannel)`

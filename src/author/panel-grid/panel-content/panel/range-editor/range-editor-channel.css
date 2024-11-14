@@ -36,7 +36,7 @@
     --light-contrast-color
   );
   --_ui5-v2-2-0_slider_progress_background: var(
-    --glass-edge
+    --slider-background
   );
   --_ui5-v2-2-0_slider_padding: 0 25px 0 25px;
   --_ui5-v2-2-0_slider_handle_width: var(--handle-width);

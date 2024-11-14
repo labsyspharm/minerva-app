@@ -55,6 +55,7 @@ class RangeEditorChannel extends sourceGroupChannels(
       max: String(log2(dataType.UpperRange)),
       'start-value': String(log2(defaultValues.LowerRange)),
       'end-value': String(log2(defaultValues.UpperRange)),
+      style: '--slider-background: red;',
       class: 'full grid',
       '@input': (e) => {
         const start = e.target.startValue;
@@ -66,7 +67,9 @@ class RangeEditorChannel extends sourceGroupChannels(
     });
     return toElement('div')`${
       rangeInput
-    }`({ class: 'full grid' });
+    }`({
+      class: 'full grid'
+    });
   }
 }
 
