@@ -67,7 +67,6 @@ class PanelItemGroup extends sourceItemMap(
         const rgb = Space !== "sRGB" ? "" : (
           `rgb(${R},${G},${B})`
         );
-        console.log(color.ID);
         return `--slider-background: ${rgb};`;
       }
       const rangeEditor = () => {
