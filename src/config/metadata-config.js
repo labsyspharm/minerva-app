@@ -89,11 +89,11 @@ const to_story = (expanded, length=1) => {
   }
 }
 
-const to_item_registry = () => {
-  const image = to_image();
-  const n_channels = 24;
-  const space = "sRGB";
-  const colors = [
+const list_colors = (space="sRGB") => {
+  if ( space !== "sRGB" ) {
+    return [];
+  }
+  return [
     [13, 171, 255], [195, 255, 0],
     [255, 139, 0], [255, 0, 199],
   ].map(([r, g, b]) => ({
@@ -108,7 +108,13 @@ const to_item_registry = () => {
       LowerRange: 0,
       UpperRange: 255 
     }
-  }))
+  }));
+}
+
+const to_item_registry = () => {
+  const image = to_image();
+  const n_channels = 24;
+
   const data_type = {
     ID: 'uint16',
     Properties: {
@@ -127,6 +133,7 @@ const to_item_registry = () => {
     to_group(false),
     to_group(false)
   ]
+  const colors = list_colors("sRGB");
   const group_channels = source_channels.map((channel,i) => {
     const size = Math.floor(
       source_channels.length / groups.length
@@ -156,4 +163,4 @@ const to_item_registry = () => {
 
 const item_registry = to_item_registry();
 
-export { item_registry }
+export { item_registry, list_colors }

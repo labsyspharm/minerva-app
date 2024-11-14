@@ -2,7 +2,9 @@ import globalCSS from './global.css' assert { type: 'css' };
 import { toElementState } from './lib/elements.js';
 import { Author } from './author/author.js';
 import { nav_config } from './config/nav-config.js';
-import { item_registry } from './config/metadata-config';
+import {
+  item_registry, list_colors
+} from './config/metadata-config';
 
 const author = (options={}) => {
   document.adoptedStyleSheets = [
@@ -48,4 +50,4 @@ const author = (options={}) => {
   });
 }
 
-export { author } 
+export { author, list_colors } 
