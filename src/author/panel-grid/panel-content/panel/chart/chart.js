@@ -39,6 +39,7 @@ class Chart extends useItemIdentifier(
     `({
       viewBox: `${stroke*2} 0 ${width-stroke*4} ${height}`,
       preserveAspectRatio: "none",
+      "clip-path": "inset(0% round 15px)",
       xmlns: "http://www.w3.org/2000/svg"
     });
   }

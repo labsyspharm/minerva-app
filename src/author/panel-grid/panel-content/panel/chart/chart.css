@@ -1,6 +1,7 @@
 svg {
   fill: none;
   stroke-width: 1.5;
+  background-color: var(--dark-gray-color);
   stroke: var(--light-focus-color);
-  fill: var(--dark-gray-color);
+  fill: white;
 }
