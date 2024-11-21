@@ -19,6 +19,26 @@ const sourceGroupChannels = (element=Object) => (
         return UUID == source_channel.UUID;
       }) || null;
     }
+
+    getSourceDistribution(group_channel) {
+      const source_channel = this.getSourceChannel(group_channel);
+      const source = new (sourceSourceChannels(Object));
+      source.elementState = this.elementState;
+      if (source_channel) {
+        return source.getSourceDistribution(source_channel);
+      }
+      return null;
+    }
+
+    getSourceDataType(group_channel) {
+      const source_channel = this.getSourceChannel(group_channel);
+      const source = new (sourceSourceChannels(Object));
+      source.elementState = this.elementState;
+      if (source_channel) {
+        return source.getSourceDataType(source_channel);
+      }
+      return null;
+    }
     
     getSourceColor(group_channel) {
       const color = group_channel.Associations.Color;

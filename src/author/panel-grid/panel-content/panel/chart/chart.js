@@ -20,9 +20,10 @@ class Chart extends useItemIdentifier(
     const stroke = 1.5;
     const d = () => {
       const source = this.itemSource;
-      const line = [
-        0, ...(source.Properties.Distribution || [ ]), 0
-      ];
+      const { YValues : values } = (
+        this.getSourceDistribution(source) || {}
+      ).Properties || {};
+      const line = [ 0, ...(values || [ ]), 0 ];
       const flat = line.slice(1,-1).every(v => v == line[1]);
       const max = Math.max(1, ...(flat ? [2*line[1]] : line));
       const len = Math.max(2, line.length);

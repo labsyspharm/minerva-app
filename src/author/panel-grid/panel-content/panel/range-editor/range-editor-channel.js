@@ -19,16 +19,20 @@ class RangeEditorChannel extends sourceGroupChannels(
     }
   }
 
-  get dataType() {
-    const { item_registry } = this.elementState;
-    const source_channel = this.getSourceChannel(
+  get distribution() {
+    const distribution = this.getSourceDistribution(
       this.itemSource
     );
-    const { Associations } = source_channel;
-    const { SourceDataType } = Associations || {};
-    const data_type = item_registry.DataTypes.find(data_type => {
-      return data_type.ID == SourceDataType?.ID
-    });
+    return distribution?.Properties || {
+      XScale: 'log', YScale: 'linear', YValues: [],
+      LowerRange: 1, UpperRange: 16
+    };
+  }
+
+  get dataType() {
+    const data_type = this.getSourceDataType(
+      this.itemSource
+    );
     return data_type?.Properties || {
       LowerRange: 0, UpperRange: 65535
     };
@@ -39,29 +43,47 @@ class RangeEditorChannel extends sourceGroupChannels(
       RangeSlider, { }
     )
     const dataType = this.dataType;
-    const defaultValues = this.itemSource.Properties;
-    const pow2 = (value) => {
+    const distribution = this.distribution;
+    const chart_x_steps = Math.max(
+      2, distribution.YValues.length
+    );
+    const chart_x_max = distribution.UpperRange;
+    const chart_x_origin = distribution.LowerRange;
+    const chart_x_range = chart_x_max - chart_x_origin;
+    const chart_x_scale = chart_x_steps / chart_x_range;
+    const from_input = (value) => {
+      value = (
+        chart_x_origin + (value / chart_x_scale)
+      );
+      if (distribution.XScale === "log") {
+        value = 2 ** value;
+      }
       return Math.max(
         dataType.LowerRange, Math.min(
-          dataType.UpperRange, Math.floor(2**value)
+          dataType.UpperRange, value
         )
       );
     }
-    const log2 = (value) => {
-      return Math.ceil(Math.log2(Math.max(1/2, value)));
+    const to_input = (value) => {
+      if (distribution.XScale === "log") {
+        value = Math.log2(Math.max(1, value));
+      }
+      return Math.round(chart_x_scale * Math.max(
+        0, Math.min(chart_x_range, value - chart_x_origin)
+      ));
     }
+    const defaultValues = this.itemSource.Properties;
     const rangeInput = toElement(rangeInputElement)``({
-      min: String(log2(dataType.LowerRange)),
-      max: String(log2(dataType.UpperRange)),
-      'start-value': String(log2(defaultValues.LowerRange)),
-      'end-value': String(log2(defaultValues.UpperRange)),
+      min: "0", max: String(chart_x_steps),
+      'start-value': String(to_input(defaultValues.LowerRange)),
+      'end-value': String(to_input(defaultValues.UpperRange)),
       class: 'full grid',
       '@input': (e) => {
         const start = e.target.startValue;
         const end = e.target.endValue;
         const { itemSource } = this;
-        itemSource.Properties.LowerRange = pow2(start);
-        itemSource.Properties.UpperRange = pow2(end);
+        itemSource.Properties.LowerRange = from_input(start);
+        itemSource.Properties.UpperRange = from_input(end);
       }
     });
     return toElement('div')`${
