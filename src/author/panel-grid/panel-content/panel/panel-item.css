@@ -29,3 +29,6 @@
     }
   }
 }
+:host([active]) {
+  color: red;
+}

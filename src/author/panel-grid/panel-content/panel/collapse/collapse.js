@@ -32,6 +32,17 @@ class Collapse extends useItemIdentifier(A11yCollapse) {
     const item = this.itemSource;
     if (item) {
       this.setItemState("Expanded", v);
+      const activatable = (
+        "Active" in item.State
+      );
+      if (v === true && activatable) {
+        const event_name = [
+          this.constructor.name, "activate"
+        ].join(':');
+        this.dispatchCustomEvent(event_name, {
+          "UUID": item.UUID
+        });
+      }
     }
     const prefix = "icons:radio-button-";
     this.icon = prefix + [

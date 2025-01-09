@@ -8,10 +8,6 @@ class ItemSideMenuGroup extends (
 
   static name = 'item-side-menu-group'
   static itemElement = PanelItemGroup
-
-  static itemStateMap = new Map([
-    ['Expanded', 'expanded']
-  ])
 }
 
 export { ItemSideMenuGroup };

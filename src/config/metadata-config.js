@@ -66,6 +66,7 @@ const to_group = (expanded) => {
       Name: lorem.sentence(1)
     },
     State: {
+      Active: false, 
       Expanded: expanded
     }
   }
@@ -84,6 +85,7 @@ const to_story = (expanded, length=1) => {
       Hyperlinks: []
     },
     State: {
+      Active: false, 
       Expanded: expanded
     }
   }

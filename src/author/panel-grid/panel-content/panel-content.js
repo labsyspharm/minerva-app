@@ -24,9 +24,7 @@ class PanelContent extends HTMLElement {
       return this.elementDescription;
     }
     const content = () => {
-      return toElement(panel_element)``({
-        itemSources: [] 
-      });
+      return toElement(panel_element)``();
     }
     return toElement('div')`
       <h2 class="indent">${description}</h2>

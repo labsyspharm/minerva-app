@@ -182,6 +182,11 @@ function defineElement(element, options={}) {
       addStyles.call(this, globalStyleSheet);
       return rendered;
     }
+    dispatchCustomEvent(key, detail=null) {
+      this.shadowRoot.dispatchEvent(new CustomEvent(
+        key, { detail, bubbles: true, composed: true }
+      ));
+    }
     getPropertyOptions(k) {
       if (this.constructor?.getPropertyOptions) {
         return this.constructor?.getPropertyOptions(k);

@@ -44,7 +44,7 @@ const author = (options={}) => {
   });
   return defineElement(Author, {
     defaults: {
-      notice: '', dialog: '', tab: 'GROUP-PANEL',
+      notice: '', dialog: '', tab: 'STORY-PANEL',
       selections: []
     }
   });

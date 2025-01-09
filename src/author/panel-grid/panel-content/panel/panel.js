@@ -11,10 +11,43 @@ class Panel extends HTMLElement {
     return panelCSS;
   }
 
+  disconnectedCallback() {
+    this.removeEventListener(
+      "collapse-group:activate", this.activate_group 
+    );
+    this.removeEventListener(
+      "collapse-story:activate", this.activate_story 
+    );
+  }
+
   connectedCallback() {
     this.elementState.items = [
       ...this.itemSources
     ];
+    const activate = (watch) => {
+      return ({detail}) => {
+        [
+          ...this.shadowRoot.firstChild.children
+        ].map(
+          child => {
+            const uuid = child.getAttribute("uuid");
+            if (child.setItemState && uuid) {
+              child.setItemState(
+                "Active", uuid === detail.UUID
+              );
+            }
+          }
+        )
+      }
+    }
+    this.activate_group = activate(false);
+    this.activate_story = activate(true);
+    this.addEventListener(
+      "collapse-group:activate", this.activate_group 
+    );
+    this.addEventListener(
+      "collapse-story:activate", this.activate_story
+    );
   }
 
   get elementTemplate() {
@@ -22,7 +55,8 @@ class Panel extends HTMLElement {
       const menu_element = this.constructor.menuElement; 
       const menu = this.defineElement(menu_element, {
         defaults: {
-          expanded: item.State.Expanded,
+          expanded: false,
+          active: false,
           open_menu: false,
           UUID: item.UUID
         }

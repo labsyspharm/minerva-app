@@ -2,6 +2,7 @@ const sourceStoryItems = (element=Object) => (
   class extends element {
 
     static itemStateMap = new Map([
+      ['Active', 'active'],
       ['Name', 'name']
     ])
 

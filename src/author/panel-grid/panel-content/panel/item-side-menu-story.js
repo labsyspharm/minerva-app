@@ -8,10 +8,6 @@ class ItemSideMenuStory extends (
 
   static name = 'item-side-menu-story'
   static itemElement = PanelItemStory
-
-  static itemStateMap = new Map([
-    ['Expanded', 'expanded']
-  ])
 }
 
 export { ItemSideMenuStory };

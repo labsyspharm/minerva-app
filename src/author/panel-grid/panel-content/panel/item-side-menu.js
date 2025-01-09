@@ -8,6 +8,10 @@ class ItemSideMenu extends useItemIdentifier(HTMLElement) {
 
   static name = 'item-side-menu'
   static itemElement = PanelItem 
+  static itemStateMap = new Map([
+    ['Expanded', 'expanded'],
+    ['Active', 'active']
+  ])
 
   static get _styleSheet() {
     return itemSideMenuCSS;
@@ -73,10 +77,14 @@ class ItemSideMenu extends useItemIdentifier(HTMLElement) {
     });
     const item_el = () => {
       const panel_item = this.defineElement(item_element, {
-        defaults: { name: '' }, attributes: [ "expanded" ]
+        defaults: { name: '' },
+        attributes: [ "expanded", "active" ]
       });
       return toElement(panel_item)``({
         class: 'contents',
+        active: () => {
+          return this.elementState.active;
+        },
         expanded: () => {
           return this.elementState.expanded;
         }
@@ -84,7 +92,7 @@ class ItemSideMenu extends useItemIdentifier(HTMLElement) {
     }
     return toElement('div')`
       ${action_menu}<div>${item_el}</div>
-    `({});
+    `();
   }
 }
 
